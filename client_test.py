@@ -227,21 +227,50 @@
 #     except Exception as e:
 #         print("Erreur lors du health check:", e)
 
+# import requests
+
+# # Base URL of the FastAPI server
+# BASE_URL = "http://10.31.24.63:8002"  # Replace with your server address if different
+
+# # Endpoint
+# PREDICT_ENDPOINT = f"{BASE_URL}/predict"
+
+# # Sample request data
+# request_data = {
+#     "command": "play the music",
+#     "model_name": "logistic_regression_model.pkl"
+# }
+
+# def send_predict_request(data):
+#     try:
+#         # Sending POST request to the FastAPI server
+#         response = requests.post(PREDICT_ENDPOINT, json=data)
+        
+#         # Checking the response status
+#         if response.status_code == 200:
+#             print("Prediction Response:")
+#             print(response.json())
+#         else:
+#             print(f"Error: {response.status_code} - {response.json()}")
+#     except requests.exceptions.RequestException as e:
+#         print(f"Request failed: {e}")
+
+# if __name__ == "__main__":
+#     send_predict_request(request_data)
+
 import requests
 
 # Base URL of the FastAPI server
-BASE_URL = "http://10.31.24.63:8002"  # Replace with your server address if different
+BASE_URL = "http://192.168.0.100:8002"  # Replace with your server address if different
 
 # Endpoint
 PREDICT_ENDPOINT = f"{BASE_URL}/predict"
 
-# Sample request data
-request_data = {
-    "command": "play the music",
-    "model_name": "logistic_regression_model.pkl"
-}
+
 
 def send_predict_request(data):
+    # Sample request data
+
     try:
         # Sending POST request to the FastAPI server
         response = requests.post(PREDICT_ENDPOINT, json=data)
@@ -255,5 +284,237 @@ def send_predict_request(data):
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
 
+import time
+
 if __name__ == "__main__":
-    send_predict_request(request_data)
+    commands = [
+        "turn down the sound",
+        "reduce the volume",
+        "lower the volume",
+        "decrease the sound",
+        "read playlist Disco",
+        "launch playlist Disco",
+        "play playlist Disco",
+        "start playlist Disco",
+        "open playlist Disco",
+        "read playlist Classical",
+        "launch playlist Classical",
+        "play playlist Classical",
+        "start playlist Classical",
+        "open playlist Classical",
+        "read playlist Electro",
+        "launch playlist Electro",
+        "play playlist Electro",
+        "start playlist Electro",
+        "open playlist Electro",
+        "read playlist Hip-Hop",
+        "launch playlist Hip-Hop",
+        "play playlist Hip-Hop",
+        "start playlist Hip-Hop",
+        "open playlist Hip-Hop",
+        "read playlist Jazz",
+        "launch playlist Jazz",
+        "play playlist Jazz",
+        "start playlist Jazz",
+        "open playlist Jazz",
+        "read playlist Rock",
+        "launch playlist Rock",
+        "play playlist Rock",
+        "start playlist Rock",
+        "open playlist Rock",
+        "launch the turbulence scenario",
+        "launch the turbulence mode",
+        "put yourself in turbulence mode",
+        "activate turbulence mode",
+        "start the turbulence scenario",
+        "launch the meeting",
+        "start the meeting",
+        "start the video",
+        "launch the video conference",
+        "begin the meeting",
+        "connect to videoconferencing",
+        "join the video call",
+        "connect to video call",
+        "join the conference",
+        "start video conferencing",
+        "disconnect from the meeting",
+        "leave the meeting",
+        "exit the meeting",
+        "end the call",
+        "hang up the conference",
+        "launch the evacuation scenario",
+        "launch evacuation mode",
+        "set evacuation mode",
+        "activate evacuation mode",
+        "initiate the evacuation process",
+        "launch sky guesser",
+        "start sky guesser",
+        "activate sky guesser",
+        "play sky guesser",
+        "begin sky guesser",
+        "launch the game",
+        "start the game",
+        "activate the game",
+        "play the game",
+        "begin the game",
+        "answer the call",
+        "pick up the phone",
+        "take the call",
+        "accept the call",
+        "respond to the call",
+        "launch podcast La french touch",
+        "open podcast La french touch",
+        "play podcast La french touch",
+        "start podcast La french touch",
+        "begin podcast La french touch",
+        "put the next podcast",
+        "next podcast",
+        "play the next podcast",
+        "switch to the next podcast",
+        "move to the next podcast",
+        "put on the previous podcast",
+        "previous podcast",
+        "play the previous podcast",
+        "switch to the previous podcast",
+        "move to the previous podcast",
+        "put on the last podcast",
+        "last podcast",
+        "play the last podcast",
+        "switch to the last podcast",
+        "move to the last podcast",
+        "put on the next song",
+        "next song",
+        "play the next song",
+        "switch to the next song",
+        "move to the next track",
+        "put on the previous song",
+        "previous song",
+        "play the previous song",
+        "switch to the previous song",
+        "move to the previous track",
+        "put on the last song",
+        "last song",
+        "play the last song",
+        "switch to the last song",
+        "move to the last track",
+        "show me the lyrics",
+        "display the lyrics",
+        "give me the lyrics",
+        "what are the lyrics",
+        "lyrics please",
+        "launch the karaoke",
+        "start karaoke",
+        "activate karaoke mode",
+        "begin karaoke",
+        "open karaoke",
+        "start a blind test",
+        "launch a blind test",
+        "begin blind test",
+        "play a blind test",
+        "activate blind test mode",
+        "what's the title of the track",
+        "tell me the song title",
+        "what song is this",
+        "name of the song",
+        "track title please",
+        "launch intro Odyssey mode",
+        "put yourself in intro Odyssey mode",
+        "activate intro Odyssey scenario",
+        "start intro Odyssey mode",
+        "initiate intro Odyssey scenario",
+        "launch take off mode",
+        "put yourself in take off mode",
+        "activate take off scenario",
+        "start take off mode",
+        "initiate take off scenario",
+        "launch landing mode",
+        "put yourself in landing mode",
+        "activate landing scenario",
+        "start landing mode",
+        "initiate landing scenario",
+        "launch the Interstellar film",
+        "set the Interstellar film",
+        "play movie Interstellar",
+        "show Interstellar movie",
+        "display Interstellar film",
+        "launch The Dark Knight film",
+        "set the The Dark Knight film",
+        "play movie The Dark Knight",
+        "show The Dark Knight movie",
+        "display The Dark Knight film",
+        "launch the Inception film",
+        "set the Inception film",
+        "play movie Inception",
+        "show Inception movie",
+        "display Inception film",
+        "launch the Inglorious Bastards film",
+        "set the Inglorious Bastards film",
+        "play movie Inglorious Bastards",
+        "show Inglorious Bastards movie",
+        "display Inglorious Bastards film",
+        "launch the Léon film",
+        "set the Léon film",
+        "play movie Léon",
+        "show Léon movie",
+        "display Léon film",
+        "launch the Ready Player One film",
+        "set the Ready Player One film",
+        "play movie Ready Player One",
+        "show Ready Player One movie",
+        "display Ready Player One film",
+        "launch the Spider Man film",
+        "set the Spider Man film",
+        "play movie Spider Man",
+        "show Spider Man movie",
+        "display Spider Man film",
+        "launch the Star Wars film",
+        "set the Star Wars film",
+        "play movie Star Wars",
+        "show Star Wars movie",
+        "display Star Wars film",
+        "I would like a glass of champagne",
+        "can I have champagne",
+        "please serve champagne",
+        "bring me champagne",
+        "champagne please",
+        "when do we eat",
+        "how soon is dinner",
+        "how much longer until we eat",
+        "what time is the meal",
+        "when is mealtime",
+        "what time will the meal be served?",
+        "when does the meal start?",
+        "what are we eating today",
+        "today's meal",
+        "what's on the menu",
+        "what food is available today",
+        "today's dining options",
+        "what is there to drink",
+        "available drinks",
+        "what drinks do you have",
+        "drink options",
+        "beverage list please"
+    ]
+    
+    for command in commands:
+        request_data = {
+            "command": command,
+            "model_name": "logistic_regression_model.pkl"
+        }
+        send_predict_request(request_data)
+        time.sleep(5)  # Délai de 5 secondes entre chaque envoi
+
+        # cont = input("Voulez-vous continuer ? (o/n) ")
+
+# …or create a new repository on the command line
+# echo "# exemple_fastapi_docker_IA_text_intent" >> README.md
+# git init
+# git add README.md
+# git commit -m "first commit"
+# git branch -M main
+# git remote add origin git@github.com:Guettanani/exemple_fastapi_docker_IA_text_intent.git
+# git push -u origin main
+# …or push an existing repository from the command line
+# git remote add origin git@github.com:Guettanani/exemple_fastapi_docker_IA_text_intent.git
+# git branch -M main
+# git push -u origin main

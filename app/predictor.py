@@ -243,8 +243,36 @@
         
 #         return prediction, float(max_probability)
 
+# import pickle
+# import os
+
+# class TextCommandPredictor:
+#     def __init__(self, model_path):
+#         self.model_path = model_path
+#         self.model = None
+#         self.load_model()
+    
+#     def load_model(self):
+#         if not os.path.exists(self.model_path):
+#             raise FileNotFoundError(f"Model not found at {self.model_path}")
+        
+#         with open(self.model_path, 'rb') as f:
+#             self.model = pickle.load(f)
+    
+#     def predict_command(self, command_text):
+#         if self.model is None:
+#             raise ValueError("Model not loaded")
+        
+#         prediction = self.model.predict([command_text])[0]
+#         probabilities = self.model.predict_proba([command_text])[0]
+#         max_probability = probabilities[list(self.model.classes_).index(prediction)]
+        
+#         return prediction, float(max_probability)
+
+
 import pickle
 import os
+from joblib import load as joblib_load  # Compatible avec des modèles sauvegardés en .bin (exemple: joblib)
 
 class TextCommandPredictor:
     def __init__(self, model_path):
@@ -256,13 +284,22 @@ class TextCommandPredictor:
         if not os.path.exists(self.model_path):
             raise FileNotFoundError(f"Model not found at {self.model_path}")
         
-        with open(self.model_path, 'rb') as f:
-            self.model = pickle.load(f)
+        _, ext = os.path.splitext(self.model_path)
+        if ext == ".pkl":
+            # Chargement d'un modèle Pickle
+            with open(self.model_path, 'rb') as f:
+                self.model = pickle.load(f)
+        elif ext == ".bin":
+            # Chargement d'un modèle au format binaire (exemple : joblib)
+            self.model = joblib_load(self.model_path)
+        else:
+            raise ValueError(f"Unsupported file extension '{ext}'. Supported formats are .pkl and .bin")
     
     def predict_command(self, command_text):
         if self.model is None:
             raise ValueError("Model not loaded")
         
+        # Prédictions
         prediction = self.model.predict([command_text])[0]
         probabilities = self.model.predict_proba([command_text])[0]
         max_probability = probabilities[list(self.model.classes_).index(prediction)]
